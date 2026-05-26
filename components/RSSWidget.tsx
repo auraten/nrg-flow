@@ -166,6 +166,18 @@ export function RSSWidget() {
         </div>
         <FeedRow url={customFeedUrl} />
       </div>
+
+      <p className="text-[11px] text-stone-700">
+        New to RSS?{" "}
+        <a
+          href="https://apps.apple.com/us/app/netnewswire-rss-reader/id1480640210"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-stone-400 transition-colors"
+        >
+          NetNewsWire is free ↗
+        </a>
+      </p>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { fetchWeather } from "@/lib/weather";
 import { interpretAll, interpretLake } from "@/lib/interpret";
 import { FilterableContent, SectionData } from "@/components/FilterableContent";
 import { WeatherBar } from "@/components/WeatherBar";
+import { RSSWidget } from "@/components/RSSWidget";
 import { formatRelativeTime } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -96,6 +97,8 @@ export default async function Home() {
 
       {/* Footer */}
       <footer className="mt-12 border-t border-stone-800 pt-6 text-[11px] text-stone-600">
+        <RSSWidget />
+
         <div className="mb-4">
           <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-stone-700">Gauge Sources</p>
           <ul className="flex flex-col gap-1">

@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "NRG Flow — New River Gorge Conditions",
   description:
     "Real-time water conditions for the New River Gorge. Rafting, kayaking, river surfing, rock climbing access, and Gauley River releases.",
+  alternates: {
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
+  },
 };
 
 export default function RootLayout({

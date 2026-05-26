@@ -110,7 +110,7 @@ function FilterRow({
             key={opt.id}
             onClick={() => onChange(opt.id)}
             className={cn(
-              "rounded-full px-3 py-1 text-xs font-medium transition-colors",
+              "whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium transition-colors",
               value === opt.id
                 ? "bg-stone-200 text-stone-900"
                 : "bg-stone-800 text-stone-400 hover:bg-stone-700 hover:text-stone-200"

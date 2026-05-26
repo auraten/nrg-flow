@@ -6,7 +6,7 @@ import { FilterableContent, SectionData } from "@/components/FilterableContent";
 import { WeatherBar } from "@/components/WeatherBar";
 import { formatRelativeTime } from "@/lib/utils";
 
-export const revalidate = 900;
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const [gauges, lake, weather] = await Promise.all([fetchAllGauges(), fetchSummersvilleLake(), fetchWeather()]);

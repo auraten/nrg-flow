@@ -1,9 +1,17 @@
 import { fetchAllGauges } from "@/lib/usgs";
 import { fetchSummersvilleLake } from "@/lib/usace";
 import { interpretAll, interpretLake } from "@/lib/interpret";
-import { ActivityCondition } from "@/types/conditions";
+import { ActivityCondition, ConditionLevel } from "@/types/conditions";
 
 export const dynamic = "force-dynamic";
+
+const LEVEL_ORDER: Record<ConditionLevel, number> = {
+  unknown: 0,
+  poor: 1,
+  caution: 2,
+  good: 3,
+  great: 4,
+};
 
 function esc(str: string) {
   return str
@@ -31,7 +39,11 @@ function renderItem(sectionName: string, activity: ActivityCondition, baseUrl: s
     </item>`;
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const activityFilter = searchParams.get("activity");
+  const minLevel = searchParams.get("minLevel") as ConditionLevel | null;
+
   const [gauges, lake] = await Promise.all([fetchAllGauges(), fetchSummersvilleLake()]);
   const { lowerNew, upperNew, gauley } = interpretAll(gauges);
   const lakeActivities = interpretLake(lake);
@@ -50,7 +62,13 @@ export async function GET() {
 
   const items = sections
     .flatMap(({ name, activities }) =>
-      activities.map((a) => renderItem(name, a, baseUrl, fetchedAt))
+      activities
+        .filter((a) => {
+          if (activityFilter && a.id !== activityFilter) return false;
+          if (minLevel && LEVEL_ORDER[a.level] < LEVEL_ORDER[minLevel]) return false;
+          return true;
+        })
+        .map((a) => renderItem(name, a, baseUrl, fetchedAt))
     )
     .join("");
 

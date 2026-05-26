@@ -1,5 +1,5 @@
 import { fetchAllGauges } from "@/lib/usgs";
-import { fetchSummersvilleLake } from "@/lib/usace";
+import { fetchSummersvilleLake, getLakeSurfaceTempF } from "@/lib/usace";
 import { fetchWeather } from "@/lib/weather";
 import { interpretAll, interpretLake } from "@/lib/interpret";
 import { FilterableContent, SectionData } from "@/components/FilterableContent";
@@ -18,13 +18,14 @@ export default async function Home() {
   const waterTempF = (c: number | null) =>
     c !== null ? ` · ${Math.round(c * 9 / 5 + 32)}°F water` : "";
 
+  const lakeSurfaceTempF = getLakeSurfaceTempF();
   const lakeSubtitle =
     lake.elevationFt !== null
       ? `${lake.elevationFt.toFixed(2)} ft elevation · ${
           lake.change24hr !== null && lake.change24hr !== 0
             ? `${lake.change24hr > 0 ? "+" : ""}${lake.change24hr.toFixed(2)} ft past 24h`
             : "steady past 24h"
-        }`
+        }${lakeSurfaceTempF !== null ? ` · ~${lakeSurfaceTempF}°F surface` : ""}`
       : "Summersville Dam — USACE";
 
   return (

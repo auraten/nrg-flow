@@ -1,5 +1,13 @@
 import { LakeReading } from "@/types/conditions";
 
+const LAKE_SURFACE_TEMP_F: Partial<Record<number, number>> = {
+  4: 52, 5: 68, 6: 70, 7: 75, 8: 80, 9: 75, 10: 68,
+};
+
+export function getLakeSurfaceTempF(): number | null {
+  return LAKE_SURFACE_TEMP_F[new Date().getMonth() + 1] ?? null;
+}
+
 const SUMMERSVILLE_URL =
   "https://www.lrh-wc.usace.army.mil/wm/data/json/projects/sug_15M.min.json.js";
 
